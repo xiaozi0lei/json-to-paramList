@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <!-- 适配手机 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>json-to-paramList</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./static/css/ext/bootstrap.min.css" rel="stylesheet"/>
+    <link href="./static/css/starter-template.css" rel="stylesheet"/>
+
+    <!--自定义的 css-->
+    <style type="text/css">
+        .trStyle1 {
+            background-color: #f7ecb5;
+        }
+
+        .trStyle2 {
+            background-color: #c7ddef;
+        }
+
+        .trStyle3 {
+            background-color: #c9e2b3;
+        }
+
+        .trStyle4 {
+            background-color: #c7ddef;
+        }
+        .octicon {
+            display: inline-block;
+            fill: currentColor;
+            vertical-align: text-bottom;
+        }
+    </style>
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Json To ParamList</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="http://www.sunguolei.cn/">官网</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li id="login">
+                    <a href="https://github.com/sunwanying/json-to-paramList">
+                        <svg height="20" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="20"
+                             aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                  d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                        </svg>
+                        Fork Me
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">json 转 paramList</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <div class="form-group" style="padding-bottom: 5px">
+                        <label class="col-md-1 control-label">json 转换</label>
+
+                        <div class="col-md-10">
+                        <textarea name="paramJson" id="paramJson" class="form-control" title='请输入json'
+                                  rows="6" oninput="this.style.height = this.scrollHeight + 'px';"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" id="jsonToParamButton" class="col-md-1 col-md-offset-4 btn btn-primary">
+                            转换
+                        </button>
+                        <button type="button" id="paramExportButton" class="col-md-1 col-md-offset-1 btn btn-primary">
+                            转换
+                        </button>
+                    </div>
+                    <div class="form-group" style="padding-bottom: 5px" id="paramListPreview">
+                        <label class="col-md-1 control-label">转换结果</label>
+
+                        <div class="col-md-10">
+                        <textarea name="paramResult" id="paramResult" class="form-control" title='转换结果'
+                                  rows="6" oninput="this.style.height = this.scrollHeight + 'px';" readonly></textarea>
+                        </div>
+                    </div>
+
+                    <div id="inParamContainer" class="form-group" style="padding-bottom: 5px">
+                        <label class="col-md-1 control-label">参数列表</label>
+                        <input id="inParamList" name="inParamList" hidden title=""/>
+
+                        <div class="col-md-10">
+                            <table id="inParamTable" class="table table-bordered content">
+                                <thead>
+                                <tr>
+                                    <th>字段名称</th>
+                                    <th>字段类型</th>
+                                    <th>字段值</th>
+                                    <th>字段描述</th>
+                                    <th>是否必填项</th>
+                                    <th hidden>字段层级</th>
+                                    <th hidden>字段id</th>
+                                    <th hidden>字段父id</th>
+                                </tr>
+                                </thead>
+                                <tbody id="inParamTr">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div align="center">
+    <hr style="height:0.5px;border:none;border-top:5px groove rgba(32,31,27,0.14);"/>
+    <br/>
+
+    &copy; 2018 sunguolei.cn
+</div>
+
+<script src="./static/js/ext/jquery.min.js"></script>
+<script src="./static/js/ext/bootstrap.min.js"></script>
+<script type="text/javascript" src="./static/js/tool.js"></script>
+
+</body>
+</html>
